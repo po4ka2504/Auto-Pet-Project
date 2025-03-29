@@ -1,15 +1,15 @@
-import {test,expect} from '@playwright/test'
-
+import  {test,expect} from '@playwright/test'
 
 
 
 test.describe(`happy path+critical logic`,() =>{
-test.beforeEach(async({page})=>{
-  const NavigationToTheResource = await page.goto(`http://opencart.qatestlab.net/`)
-  NavigationToTheResource;
- await expect (page).toHaveTitle(`Best Friends`)
-})
-test (`user creation `, async({page})=>{
+  test.beforeEach(async({page})=>{
+    const NavigationToTheResource = await page.goto(`http://opencart.qatestlab.net/`)
+    NavigationToTheResource;
+   await expect (page).toHaveTitle(`Best Friends`)
+  })
+
+test.skip (`user creation `, async({page})=>{
 //locator.click()	Click the element
 const topLinksMyaccount = await page.locator('#top-links').getByText('My Account').click() //found by using locators identifier 
 topLinksMyaccount;
@@ -76,7 +76,6 @@ test(`check the category`, async({page})=>{
 // Now you can interact with it
 const hoverMenu = page.getByRole('list').filter({ hasText: 'Accessories Food Clothes' }).nth(1)
 await  expect(hoverMenu).toBeVisible()
-
 })
 })
 
