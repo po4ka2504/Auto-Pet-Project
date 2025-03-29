@@ -2,21 +2,14 @@ import {test,expect} from '@playwright/test'
 
 
 
-test (`navigate to the web page`, async({page})=>{
-    const NavigationToTheResource = await page.goto(`http://opencart.qatestlab.net/`)
 
-    NavigationToTheResource;
-
+test.describe(`happy path+critical logic`,() =>{
+test.beforeEach(async({page})=>{
+  const NavigationToTheResource = await page.goto(`http://opencart.qatestlab.net/`)
+  NavigationToTheResource;
  await expect (page).toHaveTitle(`Best Friends`)
- 
 })
-test.describe(`registration flow test suite`,() =>{
-
-
-test (`perform basic action`, async({page})=>{
-const NavigationToTheResource = await page.goto(`http://opencart.qatestlab.net/`)
-
- NavigationToTheResource;
+test (`user creation `, async({page})=>{
 //locator.click()	Click the element
 const topLinksMyaccount = await page.locator('#top-links').getByText('My Account').click() //found by using locators identifier 
 topLinksMyaccount;
@@ -62,8 +55,8 @@ const registerButton = page.getByRole(`button`,{name:`Continue`})
 
 await registerButton.click()
 
-const finalScreen =page.getByRole(`heading`,{name:`Your Account Has Been Created!`})
-await expect(finalScreen).toBeVisible()
+const finalScreen =page.getByText('Account Success Your Account')
+await expect(finalScreen).toContainText(`Your Account Has Been Created!`)
 /*
 // locator.press()	Press single key
 locator.uncheck()	Uncheck the input checkbox
@@ -73,4 +66,18 @@ locator.press()	Press single key
 locator.setInputFiles()	Pick files to upload
 */
 })
+
+test(`check the category`, async({page})=>{
+
+ const dogsLinkLocator= page.getByRole('link', { name: ' Dogs' })
+ 
+ await dogsLinkLocator.hover()
+
+// Now you can interact with it
+const hoverMenu = page.getByRole('list').filter({ hasText: 'Accessories Food Clothes' }).nth(1)
+await  expect(hoverMenu).toBeVisible()
+
 })
+})
+
+
