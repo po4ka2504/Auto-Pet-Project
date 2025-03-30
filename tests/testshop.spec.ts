@@ -67,7 +67,7 @@ locator.setInputFiles()	Pick files to upload
 */
 })
 
-test(`check the category`, async({page})=>{
+ test(`check the category`, async({page})=>{
 
  const dogsLinkLocator= page.getByRole('link', { name: ' Dogs' })
  
