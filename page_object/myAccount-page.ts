@@ -22,5 +22,10 @@ constructor(page:Page){
         await this.page.goto(`http://opencart.qatestlab.net/`);
     }
 
-    
+    async emailinput(){
+        const timestamp = Date.now();
+        const uniqueEmail= `test_usser_${timestamp}@test.com`;
+        console.log(`using unique email:${uniqueEmail}`);
+        
+    }
 }
