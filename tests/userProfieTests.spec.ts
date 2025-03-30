@@ -1,6 +1,7 @@
 import  {test,expect, selectors} from '@playwright/test'
 import { myAccount } from '../page_object/myAccount-page'
 import { userInfo } from 'node:os';
+import { channel } from 'node:diagnostics_channel';
 
 test.describe(`Profile user tests`,()=>{
     test.beforeEach(async({page})=>{
@@ -8,12 +9,10 @@ test.describe(`Profile user tests`,()=>{
       await ProfileUser.startPage();
      await expect (page).toHaveTitle(`Best Friends`)
     })
-    
-    test(`user Profile Edit`, async({page})=>{
+     
+    test(`user Profile Edit`, async({page})=>{ // contain bug
       const UserProfileEdit = new myAccount(page);
-      const myAccountBar = page.getByRole(`link`,{name:`My Account`})
-      await myAccountBar.click()
-      
+       await UserProfileEdit.myAccountBar.click()
        await UserProfileEdit.EditYourAccountInformationLink.click()
        await UserProfileEdit.EditInformationFistName.click({clickCount:3})
        await UserProfileEdit.EditInformationFistName.fill(`Tester125`)
@@ -43,4 +42,14 @@ test.describe(`Profile user tests`,()=>{
       // await expect(UserProfileEdit.EditInformationTelephone).toHaveValue(`9379992`)  
     })
     
+    test (`Change your password`, async({page})=>{ // contain bug
+      const ChangeYourPassword = new myAccount(page);
+      await ChangeYourPassword.myAccountBar.click()
+      await ChangeYourPassword.ChangeYourPassword.click()
+      await ChangeYourPassword.PasswordField1.fill(`test_12345`)
+      await ChangeYourPassword.PasswordField2.fill(`test_12345`)
+      await ChangeYourPassword.ButtonContinue.click()
+
+      await expect(page.getByText(`Password confirmation does not match password!`)).toBeVisible()
+    })
   })
